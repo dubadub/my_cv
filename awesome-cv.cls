@@ -204,6 +204,7 @@
 % For elements of entry
 \newcommand*{\entrytitlestyle}[1]{{\fontsize{10pt}{1em}\bodyfont\bfseries\color{darktext} #1}}
 \newcommand*{\entrypositionstyle}[1]{{\fontsize{8pt}{1em}\bodyfont\scshape\color{graytext} #1}}
+\newcommand*{\entryachievementsstyle}[1]{{\fontsize{8pt}{1em}\bodyfontlight\upshape\color{graytext} #1}}
 \newcommand*{\entrydatestyle}[1]{{\fontsize{8pt}{1em}\bodyfontlight\slshape\color{graytext} #1}}
 \newcommand*{\entrylocationstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\slshape\color{awesome} #1}}
 \newcommand*{\descriptionstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\upshape\color{text} #1}}
@@ -241,7 +242,7 @@
 %-------------------------------------------------------------------------------
 % Define photo ID
 % Usage: \photo[circle|rectangle,edge|noedge,left|right]{<path-to-image>}
-\newcommand{\photo}[2][circle,edge,left]{%
+\newcommand{\photo}[2][rectangle,noedge,left]{%
   \def\@photo{#2}
   \@for\tmp:=#1\do{%
     \ifthenelse{\equal{\tmp}{circle} \or \equal{\tmp}{rectangle}}%
@@ -562,10 +563,12 @@
 
 % Define a section for CV
 % Usage: \cvsection{<section-title>}
-\newcommand{\cvsection}[1]{%
+\newcommand{\cvsection}[2]{%
   \vspace{\acvSectionTopSkip}
   \sectionstyle{#1}
   \phantomsection
+  \color{gray}\vhrulefill{0.9pt}
+  #2
   \color{gray}\vhrulefill{0.9pt}
 }
 
@@ -588,6 +591,22 @@
   \vspace{2mm}
 }
 
+
+% Define an entry of cv blitz information
+% Usage: \cvblitz{<position>}{<title>}{<location>}{<date>}{<description>}
+\newcommand*{\cvblitz}[5]{%
+  \vspace{-2.0mm}
+  \setlength\tabcolsep{0pt}
+  \setlength{\extrarowheight}{0pt}
+
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.0cm} R{3.5cm}}
+    \ifempty{#3#4}
+      {\entrypositionstyle{#1} \entryachievementsstyle{#2} & \entrydatestyle{#5} \\}
+      {\entrytitlestyle{#3} & \entrylocationstyle{#4} \\
+      \entrypositionstyle{#1} \entryachievementsstyle{#2} & \entrydatestyle{#5} \\}
+  \end{tabular*}%
+}
+
 % Define an environment for cventry
 \newenvironment{cventries}{%
   \vspace{\acvSectionContentTopSkip}
@@ -601,6 +620,7 @@
   \vspace{-2.0mm}
   \setlength\tabcolsep{0pt}
   \setlength{\extrarowheight}{0pt}
+
   \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.5cm} R{4.5cm}}
     \ifempty{#2#3}
       {\entrypositionstyle{#1} & \entrydatestyle{#4} \\}
@@ -668,6 +688,10 @@
 % Usage: \cvskill{<type>}{<skillset>}
 \newcommand*{\cvskill}[2]{%
     \skilltypestyle{#1} & \skillsetstyle{#2} \\
+}
+
+\newcommand*{\cvstar}{%
+    {\color{awesome-mustard} \faStar}
 }
 
 % Define an environment for cvitems(for cventry)
