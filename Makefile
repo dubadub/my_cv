@@ -3,18 +3,18 @@
 CC = xelatex
 OUTPUT_DIT = output
 
-CV_SHORT_DIR = cv_short
+CV_SHORT_DIR = cv
 CV_SHORT_SRCS = $(shell find $(CV_SHORT_DIR) -name '*.tex')
 
-CV_DIR = cv_short
-CV_SRCS = $(shell find $(CV_DIR) -name '*.tex')
+WORK_EXP_DIR = work_expirience
+WORK_EXP_SRCS = $(shell find $(WORK_EXP_DIR) -name '*.tex')
 
-output: $(foreach x, coverletter cv_short, $x.pdf)
+output: $(foreach x, cv work_expirience, $x.pdf)
 
-cv_short.pdf: cv_short.tex $(CV_SHORT_SRCS)
+cv.pdf: cv.tex $(CV_SHORT_SRCS)
 	$(CC) -output-directory=$(OUTPUT_DIT) $<
 
-cv.pdf: cv.tex $(CV_SRCS)
+work_expirience.pdf: work_expirience.tex $(WORK_EXP_SRCS)
 	$(CC) -output-directory=$(OUTPUT_DIT) $<
 
 coverletter.pdf: coverletter.tex
