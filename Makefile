@@ -9,7 +9,7 @@ CV_SHORT_SRCS = $(shell find $(CV_SHORT_DIR) -name '*.tex')
 WORK_EXP_DIR = work_expirience
 WORK_EXP_SRCS = $(shell find $(WORK_EXP_DIR) -name '*.tex')
 
-output: $(foreach x, cv work_expirience, $x.pdf)
+output: $(foreach x, cv coverletter work_expirience, $x.pdf)
 
 cv.pdf: cv.tex $(CV_SHORT_SRCS)
 	$(CC) -output-directory=$(OUTPUT_DIT) $<
