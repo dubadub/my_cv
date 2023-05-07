@@ -2,6 +2,7 @@
 
 CC = xelatex
 OUTPUT_DIT = output
+THIS_DIR := $(dir $(abspath $(firstword $(MAKEFILE_LIST))))
 
 CV_SHORT_DIR = cv
 CV_SHORT_SRCS = $(shell find $(CV_SHORT_DIR) -name '*.tex')
@@ -22,3 +23,6 @@ coverletter.pdf: coverletter.tex
 
 clean:
 	rm -rf $(OUTPUT_DIT)/*.pdf
+
+watch_cv:
+	fswatch -e '.git' -e output -o . | xargs -n1 -I{} bash -c "make cv.pdf && ./preview.sh $(THIS_DIR)/output/cv.pdf"
